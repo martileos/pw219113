@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Geolocalización</title>
+</head>
+<body>
+	<p id="demo">Obtener posición del mapa</p>
+	<button onClick="localizacion();">Aceptar</button>
+	<div id="mapa"></div>
+	<script>
+		function muestraPosicion(posicion){
+			var latlon=posicion.coords.latitude+","+posicion.coords.longitude;
+			var imagenMapa="https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&key=AIzaSyAtKadHnn8uAWyBRXYrLPGuTX3FY_2M3ew";
+			document.getElementById('mapa').innerHTML="<img src='"+imagenMapa+"'>";
+			document.getElementById('demo').innerHTML = latlon;
+		}
+		function muestraError(error){
+			var mensaje = "";
+			switch(error.code){
+				case error.PERMISSION_DENIED:
+					mensaje="No autorizó el usuario";
+					break;
+				case error.POSITION_UNAVAILABLE:
+					mensaje="Información no disponible";
+					break;
+				case error.TIMEOUT:
+					mensaje="La solicitud ha tardado y expiró";
+					break;
+				case error.UNKNOWN_ERROR:
+					mensaje="Error desconocido";
+					break;
+			}
+			document.getElementById('demo').innerHTML=mensaje;
+		}
+		function localizacion(){
+			//Si el navegador lo soporta
+			if(navigator.geolocation){
+				//CALLBACK
+				navigator.geolocation.getCurrentPosition(muestraPosicion,muestraError);
+			}
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
