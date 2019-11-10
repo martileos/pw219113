@@ -17,7 +17,7 @@ controller.list = (req,res) => {
 controller.save = (req,res) =>{
 	const newCustomer = req.body;
 	req.getConnection((err,conn) =>{
-		conn.query('INSERT INTO customers set ?',(err, rows)=>{
+		conn.query('INSERT INTO customers set ?',[newCustomer],(err, rows)=>{
 			res.redirect('/');
 		})
 	})
